@@ -75,7 +75,7 @@
 > To get a local copy of the project, use this link:
 
 ```sh
-cd wise-spender
+cd spender
 git@github.com:kingno3l/spender.git
 ```
 
