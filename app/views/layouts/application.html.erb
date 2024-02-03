@@ -1,16 +1,60 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Spender</title>
+    <title>Wise Spender</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+   <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+
+    <%= favicon_link_tag 'favicon.png' %>
+    <%= javascript_importmap_tags %>
+
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
   </head>
 
   <body>
     <%= yield %>
-  </body>
+  <% flash.each do |key, message| %>
+  <div class="alert <%= key %>">
+    <%= image_tag 'green-tick.png', class: 'tick-img' %>
+    <%= message %>
+    </div>
+    <% end %>
+
+  <% if user_signed_in? %>
+  <section class='menu'>
+    <div class='menu-content'>
+      <div class="close_icon_cont" onclick="toggleMenu()"><p class="close_icon">X</p></div>
+      <div class='user-details'>
+        <%= image_tag 'user.svg', class: 'user-icon' %>
+        <p><%= current_user.name %></p>
+        <p><%= current_user.email %></p>
+      </div>
+      <br><br>
+      <ul class='menu-links'>
+    <ul class='menu-links'>
+       <li class="menulinks"><%= link_to 'Home', categories_path, onclick: 'closeMenu()', class: 'menulinks' %></li>
+       <li class="menulinks"><%= button_to 'Sign Out', destroy_user_session_path, method: :delete, onclick: 'closeMenu()', class: 'removebtnfeature' %></li>
+    </ul>
+      </ul>
+      <% end %>
+    </div>
+    </section>
+
+    <script>
+    function toggleMenu() {
+    const menu = document.querySelector('.menu');
+    if (menu.style.display === 'none') {
+      menu.style.display = 'block';
+    } else {
+      menu.style.display = 'none';
+    }
+    }
+    </script>
+
+</body>
 </html>
